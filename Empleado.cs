@@ -35,7 +35,7 @@ public class Empleado{
         get { return sueldoBasico; }
         set
         {
-            if (value >= 0)
+            if (value > 0)
             {
             sueldoBasico = value;
             }
@@ -54,13 +54,19 @@ public class Empleado{
         DateTime Today = DateTime.Today;
         return(Today.Subtract(FechaDeNacimiento).Days / 365);
     }
-    public int FaltaParaJubibilarse(){
+    public int FaltaParaJubilarse()
+    {
         if (Genero == 'M' || Genero == 'm')
         {
-            return(65 - Edad());
-        }else
+            return 65 - Edad();
+        }
+        else if (Genero == 'F' || Genero == 'f')
         {
-            return(60 - Edad());
+            return 60 - Edad();
+        }
+        else
+        {
+            return -9999;
         }
     }
     public double CalcularAdicional(){

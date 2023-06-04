@@ -2,7 +2,7 @@
 using Empleados;
 internal class Program
 {
-    const int cantEmpleados = 2;
+    const int cantEmpleados = 3;
     private static void Main(string[] args){
         var Employers = new List<Empleado>();
         double SalariosTotales;
@@ -21,10 +21,10 @@ private static void ElMasViejuno(List<Empleado> listaEmpleados){
     int MasProximo = 999;
     for (int i = 0; i < listaEmpleados.Count; i++)
     {
-        if (listaEmpleados[i].FaltaParaJubibilarse() <= MasProximo)
+        if (listaEmpleados[i].FaltaParaJubilarse() <= MasProximo)
         {
             indiceDelMayor = i;
-            MasProximo = listaEmpleados[i].FaltaParaJubibilarse();
+            MasProximo = listaEmpleados[i].FaltaParaJubilarse();
         }
     }
     MostrarDatosDeEmpleado(listaEmpleados[indiceDelMayor]);
@@ -35,7 +35,7 @@ private static void MostrarDatosDeEmpleado(Empleado employer){
     Console.WriteLine("Fecha de Nacimiento: "+ employer.FechaDeNacimiento.ToShortDateString());
     Console.WriteLine("Estado Civil: "+ employer.EstadoCivil);
     Console.WriteLine("Género: "+ employer.Genero);
-    Console.WriteLine("Fecha De Ingreso En La Empresa: "+ employer.FechaDeIngreso);
+    Console.WriteLine("Fecha De Ingreso En La Empresa: "+ employer.FechaDeIngreso.ToShortDateString());
     Console.WriteLine("Sueldo Basico: "+ employer.SueldoBasico);
     Console.WriteLine("Cargo: "+ employer.Cargo);
 
@@ -54,17 +54,16 @@ private static void CargarEmpleados(List<Empleado> listaEmpleados){
     {
         Console.WriteLine("===================");
         var nuevoEmpleado = new Empleado();
-        nuevoEmpleado = crearEmplado();
+        nuevoEmpleado = crearEmpleado();
         listaEmpleados.Add(nuevoEmpleado);
         Console.WriteLine("===================");
     }
 }
-    private static Empleado crearEmplado(){
+    private static Empleado crearEmpleado(){
         string? buffer; 
         EstadosCiviles auxEstadoCivil;
         Cargos auxCargos;
         DateTime auxFecha;
-        char auxGenero;
         double auxSueldo;
         var nuevoEmpleado = new Empleado();
         Console.Write("Nombre: ");
@@ -89,10 +88,9 @@ private static void CargarEmpleados(List<Empleado> listaEmpleados){
         do
         {
             Console.WriteLine("Género: ");
-            auxGenero = Console.ReadKey().KeyChar; 
-            Console.WriteLine("");
-        } while (auxGenero != 'M' && auxGenero != 'm' &&auxGenero != 'F' &&auxGenero != 'f');
-        nuevoEmpleado.Genero = auxGenero;
+            buffer = Console.ReadLine();
+        } while (buffer != "M" && buffer != "m" && buffer != "F" && buffer != "f");
+        nuevoEmpleado.Genero = buffer.ToUpper()[0];
         
         do
         {
