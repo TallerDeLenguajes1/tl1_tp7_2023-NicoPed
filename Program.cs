@@ -2,15 +2,44 @@
 using Empleados;
 internal class Program
 {
-    const int cantEmpleados = 3;
+    const int cantEmpleados = 2;
     private static void Main(string[] args){
         var Employers = new List<Empleado>();
         double SalariosTotales;
         CargarEmpleados(Employers);
         SalariosTotales = TotalDeSalarios(Employers);
+        Console.WriteLine("============================================================");
         Console.WriteLine($"La Percepcion total de los salarios es: {SalariosTotales}");
-        
+        Console.WriteLine("============================================================");
+        Console.WriteLine("==========================Jubilacion=========================");
+        ElMasViejuno(Employers);
+        Console.WriteLine("============================================================");
+
     }
+private static void ElMasViejuno(List<Empleado> listaEmpleados){
+    int indiceDelMayor = 0;
+    int MasProximo = 999;
+    for (int i = 0; i < listaEmpleados.Count; i++)
+    {
+        if (listaEmpleados[i].FaltaParaJubibilarse() <= MasProximo)
+        {
+            indiceDelMayor = i;
+            MasProximo = listaEmpleados[i].FaltaParaJubibilarse();
+        }
+    }
+    MostrarDatosDeEmpleado(listaEmpleados[indiceDelMayor]);
+}
+private static void MostrarDatosDeEmpleado(Empleado employer){
+    Console.WriteLine("Nombre: "+ employer.Nombre);
+    Console.WriteLine("Apellido: "+ employer.Apellido);
+    Console.WriteLine("Fecha de Nacimiento: "+ employer.FechaDeNacimiento.ToShortDateString());
+    Console.WriteLine("Estado Civil: "+ employer.EstadoCivil);
+    Console.WriteLine("Género: "+ employer.Genero);
+    Console.WriteLine("Fecha De Ingreso En La Empresa: "+ employer.FechaDeIngreso);
+    Console.WriteLine("Sueldo Basico: "+ employer.SueldoBasico);
+    Console.WriteLine("Cargo: "+ employer.Cargo);
+
+}
 private static double TotalDeSalarios(List<Empleado> listaEmpleados){
     double total = 0.0;
     for (int i = 0; i < listaEmpleados.Count; i++)
@@ -23,15 +52,17 @@ private static void CargarEmpleados(List<Empleado> listaEmpleados){
 
     for (int i = 0; i < cantEmpleados; i++)
     {
+        Console.WriteLine("===================");
         var nuevoEmpleado = new Empleado();
         nuevoEmpleado = crearEmplado();
         listaEmpleados.Add(nuevoEmpleado);
+        Console.WriteLine("===================");
     }
 }
     private static Empleado crearEmplado(){
         string? buffer; 
         EstadosCiviles auxEstadoCivil;
-        cargos auxCargos;
+        Cargos auxCargos;
         DateTime auxFecha;
         char auxGenero;
         double auxSueldo;
@@ -57,14 +88,15 @@ private static void CargarEmpleados(List<Empleado> listaEmpleados){
         
         do
         {
-            Console.Write("Género: ");
+            Console.WriteLine("Género: ");
             auxGenero = Console.ReadKey().KeyChar; 
-        } while (auxGenero != 'M' || auxGenero != 'm' ||auxGenero != 'F' ||auxGenero != 'f');
+            Console.WriteLine("");
+        } while (auxGenero != 'M' && auxGenero != 'm' &&auxGenero != 'F' &&auxGenero != 'f');
         nuevoEmpleado.Genero = auxGenero;
         
         do
         {
-            Console.Write("Fecha de ingreso a la empresa: "); 
+            Console.WriteLine("Fecha de ingreso a la empresa: "); 
             buffer = Console.ReadLine();
         } while (!DateTime.TryParse(buffer,out auxFecha));
         nuevoEmpleado.FechaDeIngreso = auxFecha;

@@ -1,5 +1,5 @@
 namespace Empleados;
-enum cargos{
+enum Cargos{
     Auxiliar = 0,
     Administracion = 1,
     Ingeniero = 2,
@@ -22,7 +22,7 @@ public class Empleado{
     private char genero;
     private DateTime fechaDeIngreso;
     private double sueldoBasico;
-    private cargos cargo;
+    private Cargos cargo;
 
     public string? Nombre { get => nombre; set => nombre = value; }
     public string? Apellido { get => apellido; set => apellido = value; }
@@ -41,7 +41,7 @@ public class Empleado{
             }
         }
     }
-    internal cargos Cargo { get => cargo; set => cargo = value; }
+    internal Cargos Cargo { get => cargo; set => cargo = value; }
 
     public Empleado(){
         
@@ -58,12 +58,9 @@ public class Empleado{
         if (Genero == 'M' || Genero == 'm')
         {
             return(65 - Edad());
-        }else if(Genero == 'F' || Genero == 'f')
-        {
-            return(60 - Edad());
         }else
         {
-            return (-9999);
+            return(60 - Edad());
         }
     }
     public double CalcularAdicional(){
@@ -76,7 +73,7 @@ public class Empleado{
         {
             adicional = adicional*0.25;
         }
-        if (Cargo == cargos.Ingeniero || Cargo == cargos.Especialista)
+        if (Cargo == Cargos.Ingeniero || Cargo == Cargos.Especialista)
         {
             adicional += adicional * 0.50;
         }
